@@ -1,0 +1,86 @@
+{
+  "config": {
+    "startId": "intro",
+    "typingDelay": 800,
+
+    "profile": {
+      "name": "ChatFlow",
+      "avatar": "https://picsum.photos/seed/chatflow/80/80",
+      "status": "Online"
+    }
+  },
+
+  "flow": [
+
+    {
+      "id": "intro",
+      "messages": [
+        { "type": "text", "text": "Ola! Eu sou uma demo do **ChatFlow** — uma engine de chatbot guiado por botoes, 100% vanilla JS, sem dependencias." },
+        { "type": "text", "text": "A ideia e simples: voce define o roteiro da conversa em um arquivo **JSON** e a engine renderiza tudo sozinha." },
+        { "type": "text", "text": "Nada de input de texto livre — a navegacao e toda por botoes, o que torna o fluxo previsivel e facil de instrumentar com analytics." }
+      ],
+      "options": [
+        { "label": "Como funciona?", "next": "how" },
+        { "label": "O que ele renderiza?", "next": "features" }
+      ]
+    },
+
+    {
+      "id": "how",
+      "messages": [
+        { "type": "text", "text": "O ChatFlow le um payload no formato `{ config, flow }` — pode vir de um arquivo JSON (via `fetch`), de uma variavel JS ou de uma string JSON inline." },
+        { "type": "text", "text": "Cada **no** do fluxo tem um `id`, uma lista de `messages` (as bolhas que o bot exibe) e uma lista de `options` (os botoes que aparecem abaixo)." },
+        { "type": "text", "text": "Cada botao pode: avancar para outro no (`next`), abrir um link externo (`url`) ou reiniciar o fluxo (`restart`)." },
+        { "type": "text", "text": "Ha **3 formas de iniciar** a engine:\n\n1️⃣ **Declarativa** (zero JS): `<main data-chatflow=\"flow.json\"></main>`\n2️⃣ **Por arquivo**: `new ChatFlow({ mount: el, url: 'flow.json' }).start()`\n3️⃣ **Por variavel**: `new ChatFlow({ mount: el, source: meuObjeto }).start()`" }
+      ],
+      "options": [
+        { "label": "Quais tipos de conteudo?", "next": "features" },
+        { "label": "Ver exemplos ao vivo", "next": "showcase" }
+      ]
+    },
+
+    {
+      "id": "features",
+      "messages": [
+        { "type": "text", "text": "A engine suporta **7 tipos** de mensagem, cada uma renderizada de forma apropriada:" },
+        { "type": "text", "text": "📝 **text** — texto com formatacao leve (negrito, italico, links)\n🖼️ **image** — imagens com lazy load\n🎥 **video** — player de video nativo\n🔊 **audio** — player de audio nativo\n📺 **iframe** — embed responsivo (YouTube, etc.) com sandbox\n🔗 **link** — cartao clicavel com validacao de protocolo\n🧩 **html** — bloco HTML livre para casos avancados" },
+        { "type": "text", "text": "Tudo com **seguranca em mente**: sanitizacao de saida, allowlist de protocolos, atributos `rel` e `sandbox` em links/iframes, e tratamento de erro isolado por callback." }
+      ],
+      "options": [
+        { "label": "Ver exemplos ao vivo", "next": "showcase" },
+        { "label": "Como uso no meu projeto?", "next": "usage" }
+      ]
+    },
+
+    {
+      "id": "showcase",
+      "messages": [
+        { "type": "text", "text": "Abaixo, exemplos ao vivo de cada tipo de mensagem que a engine renderiza:" },
+        { "type": "image", "src": "https://picsum.photos/seed/chatflowdemo/640/420", "alt": "Imagem de exemplo renderizada pelo ChatFlow", "_note": "image — imagens com lazy load e alt text" },
+        { "type": "audio", "src": "https://www.w3schools.com/html/horse.mp3", "_note": "audio — player de audio nativo com controls" },
+        { "type": "video", "src": "https://www.w3schools.com/html/mov_bbb.mp4", "_note": "video — player de video nativo com controls" },
+        { "type": "iframe", "src": "https://www.youtube.com/embed/dQw4w9WgXcQ", "title": "Video incorporado de exemplo", "_note": "iframe — embed responsivo com sandbox e proporcao 16:9" },
+        { "type": "link", "href": "https://github.com/gmasson", "label": "Acessar repositorio no GitHub", "_note": "link — cartao clicavel com allowlist de protocolos" },
+        { "type": "html", "html": "<em style=\"color:#aaa\">Bloco HTML livre — use com responsabilidade.</em>", "_note": "html — escape hatch para conteudo avancado" }
+      ],
+      "options": [
+        { "label": "Como uso no meu projeto?", "next": "usage" },
+        { "label": "Recomecar demo", "restart": true }
+      ]
+    },
+
+    {
+      "id": "usage",
+      "messages": [
+        { "type": "text", "text": "Para usar no seu projeto, basta incluir o CSS e o JS — **zero dependencias**:" },
+        { "type": "html", "html": "<pre style=\"background:#111;color:#0f0;padding:0.75rem;border-radius:0.5rem;font-size:0.75rem;overflow-x:auto;margin:0;\">&lt;link rel=\"stylesheet\" href=\"css/chatflow.css\"&gt;\n&lt;script src=\"js/chatflow.js\" defer&gt;&lt;/script&gt;\n&lt;main data-chatflow=\"flow.json\"&gt;&lt;/main&gt;</pre>" },
+        { "type": "text", "text": "A engine tambem expoe **callbacks** para voce instrumentar analytics e funis:\n\n• `onNode(id, node)` — disparado a cada no exibido\n• `onSelect(opt, from)` — disparado ao clicar um botao\n• `onError(err)` — disparado em falhas de carregamento" },
+        { "type": "text", "text": "O layout e todo customizavel via **CSS custom properties** — cores, bordas, tipografia, tudo ajustavel sem tocar no codigo-fonte." }
+      ],
+      "options": [
+        { "label": "Recomecar demo", "restart": true }
+      ]
+    }
+
+  ]
+}

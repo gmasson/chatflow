@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="ChatFlow — chatbot guiado por botoes, sem dependencias, com roteiro definido em JSON.">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Open Graph basico -->
+  <meta property="og:title" content="ChatFlow">
+  <meta property="og:description" content="Chatbot guiado por botoes, 100% vanilla, roteiro em JSON.">
+  <meta property="og:type" content="website">
+
+  <title>ChatFlow</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/chatflow.css">
+</head>
+<body>
+
+  <!--
+    Inicializacao declarativa (zero JS): o atributo data-chatflow aponta para
+    o roteiro. A biblioteca encontra este elemento e monta a conversa sozinha.
+  -->
+  <main id="chat" data-chatflow="flow.json" aria-label="Conversa"></main>
+
+  <script src="js/chatflow.js" defer></script>
+
+  <!--
+    Alternativa programatica (use no lugar do data-chatflow acima quando
+    precisar de callbacks de analytics/funil):
+
+    <main id="chat" aria-label="Conversa"></main>
+    <script src="js/chatflow.js" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        new ChatFlow({
+          mount: document.getElementById('chat'),
+          url: 'flow.json',                    // ou source: objeto/string JSON
+          onNode:   function (id) { console.log('entrou no no:', id); },
+          onSelect: function (opt, from) { console.log('clicou', opt.label, 'em', from); },
+          onError:  function (err) { console.error(err); }
+        }).start();
+      });
+    </script>
+  -->
+
+</body>
+</html>

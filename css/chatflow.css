@@ -1,0 +1,362 @@
+/* ChatFlow
+ * Visual inspirado no Instagram Direct: bolhas arredondadas, header limpo
+ * e botoes de acao no estilo quick-reply. Tudo em rem para escalar com o root.
+ */
+
+:root {
+  /* Cores — paleta estilo Instagram Direct */
+  --cf-bg:            #000000;
+  --cf-header-bg:     #000000;
+  --cf-bot-bubble:    #262626;
+  --cf-user-bubble:   #3797f0;
+  --cf-text:          #f5f5f5;
+  --cf-text-dim:      #8e8e8e;
+  --cf-border:        #262626;
+  --cf-link:          #3797f0;
+  --cf-btn-bg:        #262626;
+  --cf-btn-text:      #f5f5f5;
+  --cf-focus:         #ffffff;
+
+  /* Forma */
+  --cf-bubble-radius: 1.125rem;
+  --cf-btn-radius:    1.5rem;
+
+  /* Tipografia e espacamento */
+  --cf-font:          'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --cf-fs:            0.9375rem;
+  --cf-fs-sm:         0.75rem;
+  --cf-gap:           0.5rem;
+  --cf-pad:           0.75rem;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--cf-bg);
+}
+
+body {
+  font-family: var(--cf-font);
+  color: var(--cf-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Container principal ---------------------------------------------------- */
+.cf {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--cf-bg);
+}
+
+/* Barra do navegador embutido (opcional) -------------------------------- */
+.cf-browserbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cf-gap);
+  padding: 0.375rem var(--cf-pad);
+  background: #1a1a1a;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.cf-browserbar__url {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-width: 0;
+  color: var(--cf-text);
+}
+
+.cf-browserbar__domain {
+  font-size: var(--cf-fs-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cf-browserbar__label {
+  font-size: 0.6875rem;
+  color: var(--cf-text-dim);
+  margin-left: 0.25rem;
+}
+
+.cf-browserbar__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  background: transparent;
+  border: 0;
+  color: var(--cf-text);
+  cursor: pointer;
+  border-radius: var(--cf-btn-radius);
+}
+.cf-browserbar__btn:hover { color: var(--cf-text-dim); }
+.cf-browserbar__btn:focus-visible {
+  outline: 2px solid var(--cf-focus);
+  outline-offset: 2px;
+}
+
+/* Cabecalho do perfil ---------------------------------------------------- */
+.cf-header {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem var(--cf-pad);
+  background: var(--cf-header-bg);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.cf-header__back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: var(--cf-text);
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.cf-header__back:hover { background: rgba(255,255,255,0.1); }
+.cf-header__back:focus-visible {
+  outline: 2px solid var(--cf-focus);
+  outline-offset: 2px;
+}
+
+.cf-header__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.cf-header__avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cf-header__name {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cf-header__status {
+  font-size: 0.75rem;
+  color: var(--cf-text-dim);
+  line-height: 1.3;
+}
+
+/* Area de mensagens ------------------------------------------------------ */
+.cf-messages {
+  padding: var(--cf-pad);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-gap);
+}
+
+.cf-msg {
+  display: flex;
+  max-width: 82%;
+}
+
+.cf-msg--bot  { align-self: flex-start; flex-direction: column; }
+.cf-msg--user { align-self: flex-end; }
+
+.cf-msg--bot .cf-text,
+.cf-msg--bot .cf-html {
+  background: var(--cf-bot-bubble);
+  color: var(--cf-text);
+  padding: 0.625rem 0.875rem;
+  border-radius: var(--cf-bubble-radius);
+  border-bottom-left-radius: 0.25rem;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.cf-msg--user .cf-text {
+  background: linear-gradient(135deg, #3797f0, #5b51d8);
+  color: #fff;
+  padding: 0.625rem 0.875rem;
+  border-radius: var(--cf-bubble-radius);
+  border-bottom-right-radius: 0.25rem;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.cf-msg--system {
+  align-self: center;
+  max-width: 90%;
+  color: var(--cf-text-dim);
+  font-size: var(--cf-fs-sm);
+  text-align: center;
+  padding: 0.25rem 0;
+}
+
+.cf-text a { color: #fff; text-decoration: underline; }
+.cf-msg--bot .cf-text a { color: var(--cf-link); }
+
+/* Nota/legenda abaixo de midias (campo _note do JSON) ----------------- */
+.cf-note {
+  margin-top: 0.75rem;
+  color: var(--cf-text-dim);
+  font-size: var(--cf-fs-sm);
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+/* Erro fatal de carregamento (com botao de nova tentativa) -------------- */
+.cf-error {
+  align-self: center;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.cf-error__text {
+  margin: 0;
+  color: var(--cf-text-dim);
+  font-size: var(--cf-fs-sm);
+}
+
+.cf-error__retry {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  color: var(--cf-text);
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-btn-radius);
+  font-family: inherit;
+  font-size: var(--cf-fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+.cf-error__retry:hover { border-color: var(--cf-text-dim); }
+.cf-error__retry:focus-visible {
+  outline: 2px solid var(--cf-focus);
+  outline-offset: 2px;
+}
+
+/* Midia dentro das bolhas ----------------------------------------------- */
+.cf-image,
+.cf-video {
+  display: block;
+  width: 100%;
+  max-width: 20rem;
+  height: auto;
+  border-radius: var(--cf-bubble-radius);
+}
+
+.cf-audio {
+  width: 17rem;
+  max-width: 100%;
+}
+
+.cf-embed {
+  width: 100%;
+  max-width: 20rem;
+}
+.cf-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: var(--cf-bubble-radius);
+  display: block;
+}
+
+.cf-linkcard {
+  display: block;
+  padding: 0.75rem 0.875rem;
+  background: var(--cf-bot-bubble);
+  color: var(--cf-link);
+  text-decoration: none;
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-bubble-radius);
+  font-weight: 600;
+  word-break: break-word;
+}
+.cf-linkcard:hover { border-color: var(--cf-link); }
+.cf-linkcard:focus-visible {
+  outline: 2px solid var(--cf-focus);
+  outline-offset: 2px;
+}
+
+/* Indicador de "digitando" ---------------------------------------------- */
+.cf-msg--typing .cf-typing {
+  background: var(--cf-bot-bubble);
+  padding: 0.75rem 0.875rem;
+  border-radius: var(--cf-bubble-radius);
+  display: inline-flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+.cf-typing span {
+  width: 0.4rem;
+  height: 0.4rem;
+  background: var(--cf-text-dim);
+  border-radius: 50%;
+  animation: cf-bounce 1.2s infinite ease-in-out;
+}
+.cf-typing span:nth-child(2) { animation-delay: 0.15s; }
+.cf-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes cf-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30%           { transform: translateY(-0.25rem); opacity: 1; }
+}
+
+/* Botoes de acao --------------------------------------------------------- */
+.cf-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: var(--cf-pad);
+  padding-top: 0.625rem;
+}
+.cf-options:empty { display: none; }
+
+.cf-option {
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  background: transparent;
+  color: var(--cf-link);
+  border: 1.5px solid var(--cf-link);
+  border-radius: var(--cf-btn-radius);
+  font-family: inherit;
+  font-size: var(--cf-fs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.cf-option:hover  { background: rgba(55, 151, 240, 0.12); }
+.cf-option:active { background: rgba(55, 151, 240, 0.25); }
+.cf-option:focus-visible {
+  outline: 2px solid var(--cf-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cf-typing span { animation: none; opacity: 0.6; }
+  .cf-option { transition: none; }
+}
